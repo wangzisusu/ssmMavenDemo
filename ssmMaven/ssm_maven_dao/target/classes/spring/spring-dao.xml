@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+">
+
+    <!-- 加载JDBC配置文件：jdbc.properties -->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <!-- 创建连接池(也叫数据源) -->
+    <bean class="com.alibaba.druid.pool.DruidDataSource" id="druidDataSource">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+
+    <!-- MyBaties核心配置 -->
+    <bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
+        <property name="dataSource" ref="druidDataSource"/>
+        <!--给POJO对象起别名（若使用注解方式开发此项可以省略）-->
+        <property name="typeAliasesPackage" value="com.cnsdhh.ssmmaven.pojo"/>
+    </bean>
+
+    <!-- MyBatis mapper映射配置 -->
+    <!-- 此配置会自动扫描dao包下的所有接口并创建代理对象，最后放入容器中 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.cnsdhh.ssmmaven.mapper"/>
+    </bean>
+
+</beans>

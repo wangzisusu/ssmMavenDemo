@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>ssmMaven</artifactId>
+        <groupId>com.cnsdhh</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>ssm_maven_service</artifactId>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <!-- 引入DAO层坐标 -->
+        <dependency>
+            <groupId>com.cnsdhh</groupId>
+            <artifactId>ssm_maven_dao</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- 因为我们需要使用测试，所以要导入 junit 框架 -->
+        <!-- junit 框架（测试） -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <!--<version>4.12</version>-->
+            <scope>test</scope>
+        </dependency>
+        <!-- spring 集成 junit 框架 -->
+        <!-- 此处需要注意的是，Spring 5 及以上版本要求 junit 的版本必须是 4.12 及以上 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <!--<version>5.1.5.RELEASE</version>-->
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+</project>

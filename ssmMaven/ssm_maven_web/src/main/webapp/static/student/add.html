@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <title>添加学生信息</title>
+    <script src="/static/js/angularjs-min-1.4.6.js"></script>
+    <script src="/static/js/app_ssmMaven.js"></script>
+    <script src="/static/js/student_service.js"></script>
+    <script src="/static/js/base_controller.js"></script>
+    <script src="/static/js/student_controller.js"></script>
+</head>
+
+<body ng-app="ssmMaven" ng-controller="studentController">
+<h1>添加学生信息</h1>
+<form>
+    <label>学生姓名：<input type="text" name="name" ng-model="newStudent.name"/></label><br/>
+
+    <span>学生性别：</span>
+    <label>男<input type="radio" name="sex" value="1" ng-model="newStudent.sex"/></label>
+    <label>女<input type="radio" name="sex" value="0" ng-model="newStudent.sex"/></label><br/>
+
+    <label>学生年龄：<input type="text" name="age" ng-model="newStudent.age"/></label><br/>
+
+    <label>学生地址：<input type="text" name="address" ng-model="newStudent.address"/></label><br/>
+
+    <button ng-click="add(newStudent)">新增</button>
+    <p>newStudent = {{newStudent}}</p>
+</form>
+</body>
+</html>

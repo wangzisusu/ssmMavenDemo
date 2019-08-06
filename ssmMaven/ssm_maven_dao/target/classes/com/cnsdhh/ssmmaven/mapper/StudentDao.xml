@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cnsdhh.ssmmaven.mapper.StudentDao">
+
+    <!--查询所有记录-->
+    <select id="findAll" resultType="com.cnsdhh.ssmmaven.pojo.Student">
+        select * from t_student
+    </select>
+
+    <!--新增学生记录-->
+    <insert id="add" parameterType="com.cnsdhh.ssmmaven.pojo.Student">
+        insert into t_student (id, name, sex, age, address)
+        values (#{id}, #{name}, #{sex}, #{age}, #{address})
+    </insert>
+
+    <!--删除学生记录-->
+    <delete id="del" parameterType="java.util.ArrayList">
+        delete from t_student
+        where
+        <!--使用数组时-->
+        <!--<foreach collection="array" open="id in (" close=")" item="id" separator=",">-->
+        <!--使用集合时-->
+        <foreach collection="list" open="id in (" close=")" item="id" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+">
+
+    <import resource="classpath:spring/spring-aop.xml"/>
+    <import resource="classpath:spring/spring-service.xml"/>
+
+    <!--自动扫描注解组件-->
+    <context:component-scan base-package="com.cnsdhh.ssmmaven.controller"/>
+
+    <!--拦截器链-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!--对哪些资源进行拦截操作：拦截所有（包括子级）-->
+            <mvc:mapping path="/**"/>
+            <!--对哪些资源排除拦截操作-->
+            <mvc:exclude-mapping path="/static/user/*"/>
+            <mvc:exclude-mapping path="/static/js/*"/>
+            <mvc:exclude-mapping path="/user/*"/>
+            <bean class="com.cnsdhh.ssmmaven.interceptor.MyInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <!--SpringMVC的注解驱动-->
+    <!--此配置可代替设置处理器映射器和处理器适配器，并且底层也会自动将对象或集合转换成JSON格式字符串-->
+    <mvc:annotation-driven>
+        <!--修改SpringMVC在返回数据时的字符编码为UTF-8，此处解决是后端响应消息给前端时中文乱码的问题-->
+        <!--因为SpringMVC在对返回数据时会通过一系列的HttpMessageConverter实现类对数据进行编码转换，而它默认采用的字符编码为：ISO-8859-1-->
+        <mvc:message-converters register-defaults="true">
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="defaultCharset" value="UTF-8"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!--
+        当有静态资源需要加载时，比如jquery文件，通过谷歌开发者工具抓包发现，没有加载到jquery文件，原因是
+        SpringMVC的前端控制器DispatcherServlet的url-pattern配置的是“/”,代表对所有的资源都进行过滤操作，
+        所以包括静态资源也被SpringMVC过滤了。于是我们可以通过以下两种方式指定放行静态资源：
+    -->
+    <!--开启静态资源访问：方式1-->
+    <!--<mvc:resources mapping="/js/**" location="/js/"/>-->
+    <!--<mvc:resources mapping="/css/**" location="/css/"/>-->
+    <!--<mvc:resources mapping="/img/**" location="/img/"/>-->
+    <!--<mvc:resources mapping="/page/**" location="/page/"/>-->
+    <!--开启静态资源访问：方式2-->
+    <mvc:default-servlet-handler/>
+
+    <!--多媒体解析器（文件上传）-->
+    <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="maxUploadSize" value="500000"/>
+    </bean>
+
+</beans>

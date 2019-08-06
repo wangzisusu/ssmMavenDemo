@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <title>登录页面</title>
+    <script src="/static/js/angularjs-min-1.4.6.js"></script>
+    <script src="/static/js/app_ssmMaven.js"></script>
+    <script src="/static/js/user_service.js"></script>
+    <script src="/static/js/user_controller.js"></script>
+</head>
+
+<body ng-app="ssmMaven" ng-controller="userController">
+<h1>用户登录</h1>
+<form>
+    <label>用户名：<input type="text" name="username" ng-model="user.username"/></label><br/>
+    <label>密　码：<input type="password" name="password" ng-model="user.password"/></label><br/>
+    <button ng-click="login(user)">登录</button>
+    <p>user = {{user}}</p>
+</form>
+</body>
+</html>

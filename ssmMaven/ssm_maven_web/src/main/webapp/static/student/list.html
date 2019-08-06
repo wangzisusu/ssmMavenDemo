@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <title>学生信息列表</title>
+    <script src="/static/js/angularjs-min-1.4.6.js"></script>
+    <script src="/static/js/app_ssmMaven.js"></script>
+    <script src="/static/js/student_service.js"></script>
+    <script src="/static/js/base_controller.js"></script>
+    <script src="/static/js/student_controller.js"></script>
+    <script src="/static/js/filter_sexConverter.js"></script>
+    <style type="text/css">
+        .tdBgColor {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+
+<body ng-app="ssmMaven" ng-controller="studentController" ng-init="findAll()">
+<h1>学生信息列表</h1>
+<p>当前系统时间：{{sysTime}}</p>
+<table border="1" cellspacing="0" style="text-align: center">
+    <tr>
+        <th>
+            <button ng-click="selectAll()">全选</button>
+            <button ng-click="selectRes()">反选</button>
+        </th>
+        <th>学生id</th>
+        <th>学生名称</th>
+        <th>学生性别</th>
+        <th>学生年龄<br/>(从小到大)</th>
+        <th>居住地址</th>
+        <th>操作</th>
+    </tr>
+    <tr ng-repeat="student in studentList | orderBy:'age'">
+        <td>
+            <label><input type="checkbox" name="ids" value="{{student.id}}" ng-click="selectOne()"></label>
+        </td>
+        <td ng-if="$even" class="tdBgColor">{{student.id}}</td>
+        <td ng-if="$odd">{{student.id}}</td>
+        <td ng-if="$even" class="tdBgColor">{{student.name}}</td>
+        <td ng-if="$odd">{{student.name}}</td>
+        <td ng-if="$even" class="tdBgColor">{{student.sex | sexConverter}}</td>
+        <td ng-if="$odd">{{student.sex | sexConverter}}</td>
+        <td ng-if="$even" class="tdBgColor">{{student.age}}</td>
+        <td ng-if="$odd">{{student.age}}</td>
+        <td ng-if="$even" class="tdBgColor">{{student.address}}</td>
+        <td ng-if="$odd">{{student.address}}</td>
+        <td>
+            <button ng-click="delete(student.id)">删除</button>
+            <button ng-click="findOne(student.id)">修改</button>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1"><button ng-click="delete(ids)">批量删除</button></td>
+        <td colspan="2">{{mySite.name}}</td>
+        <td colspan="3"><a href="{{mySite.url}}">{{mySite.url}}</a></td>
+        <td colspan="1"><a href="./add.html"><button>新增学生</button></a></td>
+    </tr>
+</table>
+<p>ids = {{ids}}</p>
+</body>
+</html>
